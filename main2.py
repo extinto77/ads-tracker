@@ -1,4 +1,18 @@
 from seleniumwire import webdriver
+import requests
+
+ads_list_url = "https://pgl.yoyo.org/as/serverlist.php?hostformat=adblockplus;showintro=0"
+
+#Get Ads Servers
+ads_list_page = requests.get(ads_list_url)
+ads_list = ads_list_page.text.splitlines()
+#Remove lines that are not ads servers
+ads_list = [x for x in ads_list if x.startswith('||')]
+#Remove the || from the beginning of the line
+ads_list = [x.replace('||', '') for x in ads_list]
+#Remove the ^ from the end of the line
+ads_list = [x.replace('^', '') for x in ads_list]
+
 
 # Create a new instance of the Chrome driver
 driver = webdriver.Firefox()
@@ -10,19 +24,26 @@ total_downloaded_bytes = 0
 total_ads_bytes = 0
 
 def is_ad_request(request):
-    return True
+    request_url = request.url
 
-# Access requests via the `requests` attribute
-for request in driver.requests:
-    if request.response:
-        print(
+    # Check if the request URL contains any of the ad server names
+    for ad_server in ads_list:
+        if ad_server in request_url:
+            print(
             request.date,
             " | ",
             request.response.status_code,
             " | ",
             request.url,
-        )
+            )
+            
+            return True
+        
+    return False
 
+# Access requests via the `requests` attribute
+for request in driver.requests:
+    if request.response:
         response_size = 0
         try:
             response_size = int(request.response.headers['content-length'])
