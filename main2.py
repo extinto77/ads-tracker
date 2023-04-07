@@ -1,10 +1,19 @@
 from seleniumwire import webdriver
+from selenium.webdriver.firefox.options import Options
 import requests
+import sys
 
-ads_list_url = "https://pgl.yoyo.org/as/serverlist.php?hostformat=adblockplus;showintro=0"
+if(len(sys.argv) < 2):
+    print("Usage: python main.py <page_url>")
+    exit()
+
+#Get Program Args
+page_url = sys.argv[1]
+
+ADS_LIST_URL = "https://pgl.yoyo.org/as/serverlist.php?hostformat=adblockplus;showintro=0"
 
 #Get Ads Servers
-ads_list_page = requests.get(ads_list_url)
+ads_list_page = requests.get(ADS_LIST_URL)
 ads_list = ads_list_page.text.splitlines()
 #Remove lines that are not ads servers
 ads_list = [x for x in ads_list if x.startswith('||')]
@@ -14,11 +23,17 @@ ads_list = [x.replace('||', '') for x in ads_list]
 ads_list = [x.replace('^', '') for x in ads_list]
 
 
-# Create a new instance of the Chrome driver
-driver = webdriver.Firefox()
+# Create a new instance of the Firefox driver
+options = Options()
+options.add_argument("--headless")
+driver = webdriver.Firefox(
+    options = options,
+)
 
 # Go to the Google home page
-driver.get('http://jn.pt')
+driver.get(page_url)
+print("=====================================")
+print("Loading page: ",page_url)
 
 total_downloaded_bytes = 0
 total_ads_bytes = 0
@@ -29,14 +44,8 @@ def is_ad_request(request):
     # Check if the request URL contains any of the ad server names
     for ad_server in ads_list:
         if ad_server in request_url:
-            print(
-            request.date,
-            " | ",
-            request.response.status_code,
-            " | ",
-            request.url,
-            )
-            
+            #print(request.date," | ",request.response.status_code," | ",request.url,)
+
             return True
         
     return False
@@ -60,3 +69,5 @@ percentage_of_ads = total_ads_bytes / total_downloaded_bytes * 100
 
 print('Total downloaded: %.2f MB' % total_downloaded_mb)
 print('Total ads: %.2f MB (%.2f%%)' % (total_ads_mb, percentage_of_ads))
+
+driver.close()
