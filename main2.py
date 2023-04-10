@@ -22,7 +22,6 @@ ads_list = [x.replace('||', '') for x in ads_list]
 #Remove the ^ from the end of the line
 ads_list = [x.replace('^', '') for x in ads_list]
 
-
 # Create a new instance of the Firefox driver
 options = Options()
 options.add_argument("--headless")
@@ -30,7 +29,7 @@ driver = webdriver.Firefox(
     options = options,
 )
 
-# Go to the Google home page
+# Go to the url page
 driver.get(page_url)
 print("=====================================")
 print("Loading page: ",page_url)
@@ -45,7 +44,6 @@ def is_ad_request(request):
     for ad_server in ads_list:
         if ad_server in request_url:
             #print(request.date," | ",request.response.status_code," | ",request.url,)
-
             return True
         
     return False
