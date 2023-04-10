@@ -36,6 +36,8 @@ print("Loading page: ",page_url)
 
 total_downloaded_bytes = 0
 total_ads_bytes = 0
+total_requests_number = 0
+total_ads_number = 0
 
 def is_ad_request(request):
     request_url = request.url
@@ -58,8 +60,10 @@ for request in driver.requests:
             pass
 
         total_downloaded_bytes += int(response_size)
+        total_requests_number += 1
         if is_ad_request(request):
             total_ads_bytes += int(response_size)
+            total_ads_number += 1
 
 total_downloaded_mb = total_downloaded_bytes / 1024 / 1024
 total_ads_mb = total_ads_bytes / 1024 / 1024
@@ -67,5 +71,7 @@ percentage_of_ads = total_ads_bytes / total_downloaded_bytes * 100
 
 print('Total downloaded: %.2f MB' % total_downloaded_mb)
 print('Total ads: %.2f MB (%.2f%%)' % (total_ads_mb, percentage_of_ads))
+print('Total requests: %d' % total_requests_number)
+print('Total ads requests: %d' % total_ads_number)
 
 driver.close()
