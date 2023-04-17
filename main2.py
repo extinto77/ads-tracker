@@ -1,5 +1,5 @@
 from seleniumwire import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 import requests
 import sys
 
@@ -47,6 +47,7 @@ if(len(sys.argv) < 2):
 #Get Program Args
 page_url = sys.argv[1]
 
+print("Loading Ads Servers List...")
 ADS_LIST_URL = "https://pgl.yoyo.org/as/serverlist.php?hostformat=adblockplus;showintro=0"
 
 #Get Ads Servers
@@ -58,12 +59,14 @@ ads_list = [x for x in ads_list if x.startswith('||')]
 ads_list = [x.replace('||', '') for x in ads_list]
 #Remove the ^ from the end of the line
 ads_list = [x.replace('^', '') for x in ads_list]
+print("Ads Servers List Loaded!")
 
 # Create a new instance of the Firefox driver
-options = Options()
+options = ChromeOptions()
 options.add_argument("--headless")
-driver = webdriver.Firefox(
-    options = options,
+options.add_extension("uBlock_extension.crx")
+driver = webdriver.Chrome(
+    options = options
 )
 driver.delete_all_cookies()
 
@@ -90,7 +93,7 @@ def is_ad_request(request):
 
 # Access requests via the `requests` attribute
 for request in driver.requests:
-    if request.response:
+    if request.response and request.response.status_code == 200:
         response_size = 0
         try:
             response_size = int(request.response.headers['content-length'])
