@@ -44,6 +44,45 @@ Início Projeto
     Total ads requests: 4
 
 ->Implementar limpeza de cache e cookies
+    =====================================
+    Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+    Total downloaded: 3.08 MB
+    Total ads: 0.00 MB (0.00%)
+    Total requests: 37
+    Total ads requests: 0
+    =====================================
+    Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+    Total downloaded: 3.10 MB
+    Total ads: 0.04 MB (1.25%)
+    Total requests: 46
+    Total ads requests: 4
+    =====================================
+    Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+    Total downloaded: 3.01 MB
+    Total ads: 0.04 MB (1.29%)
+    Total requests: 44
+    Total ads requests: 4
 
-
+-> Teste NoClear vs Clear de publico.pt
+    ->NoClear
+    =====================================
+    Loading page:  https://www.publico.pt/
+    Total downloaded: 32.29 MB
+    Total ads: 0.44 MB (1.36%)
+    Total requests: 233
+    Total ads requests: 30
+    =====================================
+    Loading page:  https://www.publico.pt/
+    Total downloaded: 32.70 MB
+    Total ads: 0.52 MB (1.59%)
+    Total requests: 275
+    Total ads requests: 54
+    =====================================
+    Loading page:  https://www.publico.pt/
+    Total downloaded: 32.68 MB
+    Total ads: 0.50 MB (1.53%)
+    Total requests: 266
+    Total ads requests: 47
     
+Disto concluimos que não era necessário implementar limpeza manual de cache e cookies.
+

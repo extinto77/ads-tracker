@@ -1,11 +1,16 @@
 from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+
 import requests
 import sys
+import time
+from time import sleep
 
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 if(len(sys.argv) < 2):
     print("Usage: python main.py <page_url>")
@@ -28,16 +33,40 @@ ads_list = [x.replace('||', '') for x in ads_list]
 ads_list = [x.replace('^', '') for x in ads_list]
 print("Ads Servers List Loaded!")
 
-# Create a new instance of the Chrome driver
-options = ChromeOptions()
-options.add_argument("--headless")
-#options.add_extension("uBlock_extension.crx")
-driver = webdriver.Chrome(
-    options = options
-)
-#driver.delete_all_cookies()
+def start_driver():
+    # Create a new instance of the Chrome driver
+    options = ChromeOptions()
+    options.add_argument("--headless")
+    #options.add_extension("uBlock_extension.crx")
+    driver = webdriver.Chrome(
+        options = options
+    )
+    #delete_cache(driver)
+    # driver.execute_cdp_cmd('Storage.clearDataForOrigin', {
+    # "origin": '*',
+    # "storageTypes": 'all',
+    # })
+
+    return driver
+
+def delete_cache(driver):
+    driver.execute_script("window.open('')")  # Create a separate tab than the main one
+    driver.switch_to.window(driver.window_handles[-1])  # Switch window to the second tab
+    driver.get('chrome://settings/clearBrowserData')  # Open your chrome settings.
+    perform_actions(driver, Keys.TAB * 2 + Keys.DOWN * 4 + Keys.TAB * 5 )#+ Keys.ENTER)  # Tab to the time select and key down to say "All Time" then go to the Confirm button and press Enter
+    driver.close()  # Close that window
+    driver.switch_to.window(driver.window_handles[0])  # Switch Selenium controls to the original tab to continue normal functionality.
+    print("Cache&Cookies Deleted!")
+    
+def perform_actions(driver, keys):
+    actions = ActionChains(driver)
+    actions.send_keys(keys)
+    time.sleep(2)
+    print('Performing Actions!')
+    actions.perform()
 
 # Go to the url page
+driver = start_driver()
 driver.get(page_url)
 print("=====================================")
 print("Loading page: ",page_url)
