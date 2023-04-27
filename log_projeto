@@ -4,6 +4,25 @@ Início Projeto
 13/04
 ->Remover cookies e cache
     Antes de remover execuções a um vídeo de youtube tiveram a seguinte variação:
+        =====================================
+        Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+        Total downloaded: 5.79 MB
+        Total ads: 0.06 MB (1.03%)
+        Total requests: 123
+        Total ads requests: 10
+        =====================================
+        Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+        Total downloaded: 5.98 MB
+        Total ads: 0.04 MB (0.60%)
+        Total requests: 86
+        Total ads requests: 7
+        =====================================
+        Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+        Total downloaded: 4.84 MB
+        Total ads: 0.02 MB (0.47%)
+        Total requests: 66
+        Total ads requests: 2
+    Depois de remover execuções tiveram a seguinte variação:
 
 Futuro
 Comparar com AdBlocker
