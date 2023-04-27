@@ -2,8 +2,7 @@ Antes
 Início Projeto
 
 13/04
-->Remover cookies e cache
-    Antes de remover execuções a um vídeo de youtube tiveram a seguinte variação:
+->Execução consecutiva de um vídeo no youtube FIREFOX
         =====================================
         Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
         Total downloaded: 5.79 MB
@@ -22,7 +21,29 @@ Início Projeto
         Total ads: 0.02 MB (0.47%)
         Total requests: 66
         Total ads requests: 2
-    Depois de remover execuções tiveram a seguinte variação:
 
-Futuro
-Comparar com AdBlocker
+27/04
+->Mudamos Driver para Chrome
+    =====================================
+    Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+    Total downloaded: 2.92 MB
+    Total ads: 0.02 MB (0.77%)
+    Total requests: 35
+    Total ads requests: 2
+    =====================================
+    Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+    Total downloaded: 3.66 MB
+    Total ads: 0.00 MB (0.07%)
+    Total requests: 46
+    Total ads requests: 1
+    =====================================
+    Loading page:  https://www.youtube.com/watch?v=qUzpCqXZIYw
+    Total downloaded: 3.01 MB
+    Total ads: 0.04 MB (1.29%)
+    Total requests: 44
+    Total ads requests: 4
+
+->Implementar limpeza de cache e cookies
+
+
+    
