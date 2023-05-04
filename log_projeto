@@ -86,3 +86,20 @@ Início Projeto
     
 Disto concluimos que não era necessário implementar limpeza manual de cache e cookies.
 
+->Teste de ADBLOCKER
+    ->Sem ADBLOCKER
+    =====================================
+    Loading page:  https://www.jn.pt/
+    Total downloaded: 1.85 MB
+    Total ads: 0.53 MB (28.60%)
+    Total requests: 125
+    Total ads requests: 11
+    =====================================
+    Loading page:  https://www.jn.pt/
+    Total downloaded: 1.85 MB
+    Total ads: 0.53 MB (28.60%)
+    Total requests: 125
+    Total ads requests: 11
+
+    ->Com ADBLOCKER / Sem tratamento extra
+    
