@@ -29,11 +29,7 @@ print("Ads Servers List Loaded!")
 def start_driver():
     # Create a new instance of the Chrome driver
     options = ChromeOptions()
-    #options.add_argument("--headless")
-
-    options.add_extension("uBlock_extension.crx")
-    #options.add_extension("adGuard.crx")
-    #options.add_extension("adBlock.crx")
+    options.add_argument("--headless")
 
     driver = webdriver.Chrome(
         options = options
@@ -45,7 +41,7 @@ def load_page(page_url, driver):
     print("Loading page: ",page_url)
     
     driver.switch_to.new_window('tab')
-    driver.delete_all_cookies()
+    #driver.delete_all_cookies()
     driver.get(page_url)
     
     driver_requests = driver.requests.copy()
@@ -59,7 +55,6 @@ def is_ad_request(request):
     # Check if the request URL contains any of the ad server names
     for ad_server in ads_list:
         if ad_server in request_url:
-            #print(request.date," | ",request.response.status_code," | ",request.url,)
             return True
         
     return False
@@ -72,9 +67,6 @@ def analyse_page_load(driver_requests):
     
     # Access requests via the `requests` attribute
     for request in driver_requests:
-        #print(str(request.response.status_code) + " | " + request.url)
-        #if(is_ad_request(request)):
-            #print("AD DETECTED!")
         if request.response and request.response.status_code == 200:
             response_size = 0
             try:
@@ -85,7 +77,6 @@ def analyse_page_load(driver_requests):
             total_downloaded_bytes += int(response_size)
             total_requests_number += 1
             if is_ad_request(request):
-                #print(request.date," | ",request.response.status_code," | ",request.url,)
                 total_ads_bytes += int(response_size)
                 total_ads_number += 1
 
@@ -101,17 +92,7 @@ def analyse_page_load(driver_requests):
 
 
 driver = start_driver()
-
-fst_load = load_page(page_url, driver)
-analyse_page_load(fst_load)
-
-snd_load = load_page(page_url, driver)
-analyse_page_load(snd_load)
-
-third_load = load_page(page_url, driver)
-analyse_page_load(third_load)
-
-fourth_load = load_page(page_url, driver)
-analyse_page_load(fourth_load)
+driver_requests = load_page(page_url, driver)
+analyse_page_load(driver_requests)
 
 driver.quit()
