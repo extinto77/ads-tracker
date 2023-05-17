@@ -12,7 +12,6 @@ if(len(sys.argv) < 2):
 #Get Program Args
 page_url = sys.argv[1]
 
-print("Loading Ads Servers List...")
 ADS_LIST_URL = "https://pgl.yoyo.org/as/serverlist.php?hostformat=adblockplus;showintro=0"
 
 #Get Ads Servers
@@ -24,7 +23,6 @@ ads_list = [x for x in ads_list if x.startswith('||')]
 ads_list = [x.replace('||', '') for x in ads_list]
 #Remove the ^ from the end of the line
 ads_list = [x.replace('^', '') for x in ads_list]
-print("Ads Servers List Loaded!")
 
 def start_driver():
     # Create a new instance of the Chrome driver
@@ -80,9 +78,17 @@ def analyse_page_load(driver_requests):
                 total_ads_bytes += int(response_size)
                 total_ads_number += 1
 
-    total_downloaded_mb = total_downloaded_bytes / 1024 / 1024
-    total_ads_mb = total_ads_bytes / 1024 / 1024
-    percentage_of_ads = total_ads_bytes / total_downloaded_bytes * 100
+    if total_downloaded_bytes == 0:
+        total_downloaded_mb = 0
+    else:
+        total_downloaded_mb = total_downloaded_bytes / 1024 / 1024
+    
+    if total_ads_bytes == 0:
+        total_ads_mb = 0
+        percentage_of_ads = 0
+    else:
+        total_ads_mb = total_ads_bytes / 1024 / 1024
+        percentage_of_ads = total_ads_bytes / total_downloaded_bytes * 100
 
     print('Total downloaded: %.2f MB' % total_downloaded_mb)
     print('Total ads: %.2f MB (%.2f%%)' % (total_ads_mb, percentage_of_ads))

@@ -1,7 +1,3 @@
-Site     => https://www.similarweb.com/pt/top-websites/portugal/news-and-media/
-Country  => Portugal
-Category => Publicação de notícias e mídia
-
 Rank   Website
 1      sapo.pt
 2      record.pt
