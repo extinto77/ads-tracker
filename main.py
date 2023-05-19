@@ -3,7 +3,6 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 import requests
 import sys
-import time
 
 if(len(sys.argv) < 2):
     print("Usage: python main.py <page_url>")
@@ -39,7 +38,6 @@ def load_page(page_url, driver):
     print("Loading page: ",page_url)
     
     driver.switch_to.new_window('tab')
-    #driver.delete_all_cookies()
     driver.get(page_url)
     
     driver_requests = driver.requests.copy()
